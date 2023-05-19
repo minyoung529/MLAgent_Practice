@@ -404,6 +404,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 483650788}
     m_Modifications:
+    - target: {fileID: 1445637702283706564, guid: 6d2ff5590bc5f344f893ad4daa2b6929, type: 3}
+      propertyPath: penguinBaby
+      value: 
+      objectReference: {fileID: 1295414207}
+    - target: {fileID: 1445637702283706564, guid: 6d2ff5590bc5f344f893ad4daa2b6929, type: 3}
+      propertyPath: penguinAgent
+      value: 
+      objectReference: {fileID: 2023328027}
     - target: {fileID: 3955507126723197352, guid: 6d2ff5590bc5f344f893ad4daa2b6929, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -458,6 +466,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3955507126723197352, guid: 6d2ff5590bc5f344f893ad4daa2b6929, type: 3}
   m_PrefabInstance: {fileID: 598587390}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1295414207 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8253486325986356025, guid: e9be39b3f18a37547aaad02a0dd35c2a, type: 3}
+  m_PrefabInstance: {fileID: 323334664}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2023328024
 PrefabInstance:
@@ -521,3 +534,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 86595262032209308, guid: 80bad43a13e95dd48954ae3b6704a104, type: 3}
   m_PrefabInstance: {fileID: 2023328024}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2023328027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2450521008361155672, guid: 80bad43a13e95dd48954ae3b6704a104, type: 3}
+  m_PrefabInstance: {fileID: 2023328024}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 255567704e85f9f4b878e0aa4cfee473, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
