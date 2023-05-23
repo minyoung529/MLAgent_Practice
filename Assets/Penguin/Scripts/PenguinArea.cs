@@ -15,6 +15,15 @@ public class PenguinArea : MonoBehaviour
     public Fish fishPrefab;
     private List<Fish> fishList = new List<Fish>();
 
+    #region  Property
+    public int FishRemaining => fishList.Count;
+    #endregion
+
+    void Update()
+    {
+        cumulativeRewardText.text = penguinAgent.GetCumulativeReward().ToString("0.00");
+    }
+
     /// <summary>
     /// Choose Random Position in Sector
     /// </summary>
@@ -70,6 +79,12 @@ public class PenguinArea : MonoBehaviour
             fish.fishSpeed = fishSpeed;
             fishList.Add(fish);
         }
+    }
+
+    public void RemoveSpecificFish(Fish fish)
+    {
+        fishList.Remove(fish);
+        Destroy(fish.gameObject);
     }
 
     private void RemoveAllFish()

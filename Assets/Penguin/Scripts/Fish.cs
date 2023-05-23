@@ -21,14 +21,14 @@ public class Fish : MonoBehaviour
 
     private void Swim()
     {
-        if (Time.fixedTime >= nextActionTime)
+        if (Time.fixedDeltaTime >= nextActionTime)
         {
             randomizedSpeed = fishSpeed * Random.Range(0.5f, 1.5f);
             targetPosition = PenguinArea.ChooseRandomPosition(transform.parent.position, 100f, 260f, 2f, 13f) + Vector3.up * 0.5f;
             transform.rotation = Quaternion.LookRotation(targetPosition - transform.position, Vector3.up);
         
             float timeToGetThere = Vector3.Distance(transform.position, targetPosition);
-            nextActionTime = Time.deltaTime + timeToGetThere;
+            nextActionTime = Time.fixedDeltaTime + timeToGetThere;
         }
         else
         {

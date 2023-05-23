@@ -27,7 +27,7 @@ public class PenguinAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        isFull=false;
+        isFull = false;
         penguinArea.ResetArea();
 
     }
@@ -48,20 +48,26 @@ public class PenguinAgent : Agent
         // 1 => left turn
         // 2 => right turn
 
-        float forwardAmount  = actions.DiscreteActions[0];
+        float forwardAmount = actions.DiscreteActions[0];
         float turnAmount = 0f;
 
-        if(actions.DiscreteActions[1] == 1f)
+        if (actions.DiscreteActions[1] == 1f)
         {
             turnAmount = -1f;
         }
-        else if(actions.DiscreteActions[1] == 2f)
+        else if (actions.DiscreteActions[1] == 2f)
         {
             turnAmount = 1f;
         }
 
         rigidbody.MovePosition(transform.position + transform.forward * forwardAmount * moveSpeed * Time.fixedDeltaTime);
         transform.Rotate(transform.up * turnAmount * turnSpeed * Time.fixedDeltaTime);
+
+        if (MaxStep > 0)
+        {
+            // wander > little minus reward
+            AddReward(-1f / MaxStep);
+        }
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -69,21 +75,65 @@ public class PenguinAgent : Agent
         int forwardACtion = 0;
         int turnAction = 0;
 
-        if(Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             forwardACtion = 1;
         }
 
-        if(Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             turnAction = 1; // Left Turn
         }
-        else if(Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             turnAction = 2; // Right Turn
         }
 
         actionsOut.DiscreteActions.Array[0] = forwardACtion;
         actionsOut.DiscreteActions.Array[1] = turnAction;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.transform.CompareTag("Fish"))
+        {
+            EatFish(other.transform.GetComponent<Fish>());
+        }
+
+        else if (other.transform.CompareTag("Baby"))
+        {
+            RegurgitateFish();
+        }
+    }
+
+    private void EatFish(Fish fishObject)
+    {
+        if (isFull) return;
+
+        isFull = true;
+        penguinArea.RemoveSpecificFish(fishObject);
+        AddReward(1f);
+
+        // If agent collide fish, add reward (1f)
+    }
+
+    private void RegurgitateFish()
+    {
+        if (!isFull) return;
+        isFull = false;
+
+        GameObject regurgitatedFish = Instantiate(regurgitatedFisnPrefab, baby.transform.position, Quaternion.identity, transform.parent);
+        Destroy(regurgitatedFish, 4f);
+
+        GameObject heart = Instantiate(heartPrefab, baby.transform.position + Vector3.up, Quaternion.identity, transform.parent);
+        Destroy(heart, 4f);
+
+        AddReward(1f);
+        // if regurgitate fish to baby, add reward (1f)
+
+        if (penguinArea.FishRemaining <= 0)
+        {
+            EndEpisode();
+        }
     }
 }
