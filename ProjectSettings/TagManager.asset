@@ -8,6 +8,14 @@ TagManager:
   - Fish
   - DEAD_ZONE
   - TARGET
+  - BAD_ITEM
+  - WALL
+  - GOOD_ITEM
+  - HINT
+  - RED
+  - BLUE
+  - BLACK
+  - GREEN
   layers:
   - Default
   - TransparentFX
