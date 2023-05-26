@@ -375,8 +375,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Record: 0
   NumStepsToRecord: 0
-  DemonstrationName: 
-  DemonstrationDirectory: 
+  DemonstrationName: MummyIL
+  DemonstrationDirectory: Assets/Mummy/Demo
 --- !u!1 &5705083651249465238
 GameObject:
   m_ObjectHideFlags: 0
