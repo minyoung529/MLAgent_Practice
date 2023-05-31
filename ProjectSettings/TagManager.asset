@@ -16,6 +16,7 @@ TagManager:
   - BLUE
   - BLACK
   - GREEN
+  - BALL
   layers:
   - Default
   - TransparentFX
