@@ -10,7 +10,7 @@ public class AgentMovement : MonoBehaviour
     private float speed = 5f;
 
     [SerializeField]
-    private Transform firstPosition;
+    private Transform firstTransform;
 
     void Awake()
     {
@@ -26,9 +26,10 @@ public class AgentMovement : MonoBehaviour
     {
         rigid.velocity = Vector3.zero;
 
-        if (firstPosition)
+        if (firstTransform)
         {
-            transform.position = firstPosition.position;
+            transform.position = firstTransform.position;
+            transform.rotation = firstTransform.rotation;
         }
     }
 }

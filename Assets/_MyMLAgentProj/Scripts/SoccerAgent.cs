@@ -11,11 +11,16 @@ public class SoccerAgent : Agent
     private SoccerField soccerField;
     private AgentShoot shoot;
 
+    private void Update()
+    {
+        AddRewardToAgent(-Time.deltaTime * 0.25f);
+    }
+
     public override void Initialize()
     {
         movement = GetComponent<AgentMovement>();
         shoot = GetComponent<AgentShoot>();
-        soccerField = FindObjectOfType<SoccerField>();
+        soccerField = transform.GetComponentInParent<SoccerField>();
     }
 
     public override void OnEpisodeBegin()
@@ -58,5 +63,10 @@ public class SoccerAgent : Agent
             var dActions = actionsOut.DiscreteActions;
             dActions[0] = 1;
         }
+    }
+
+    public void AddRewardToAgent(float value)
+    {
+        AddReward(value);
     }
 }
