@@ -305,6 +305,7 @@ GameObject:
   - component: {fileID: 5866666020708254630}
   - component: {fileID: 1271280405582631617}
   - component: {fileID: 4033516218284198805}
+  - component: {fileID: 4662207844958838849}
   m_Layer: 0
   m_Name: Donguri01
   m_TagString: Untagged
@@ -364,7 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 9
+    VectorObservationSize: 16
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
@@ -375,8 +376,8 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
-  m_BehaviorName: My Behavior
+  m_BehaviorType: 0
+  m_BehaviorName: Soccer
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -396,7 +397,8 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 25000
+  MaxStep: 500000
+  oppositeGoalPost: {fileID: 0}
 --- !u!114 &4486549071709112244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11bee69989bb0d4bb76433653d042c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 10
   firstTransform: {fileID: 0}
 --- !u!114 &5866666020708254630
 MonoBehaviour:
@@ -438,6 +440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4
+  force: 3000
 --- !u!65 &1271280405582631617
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -467,6 +470,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &4662207844958838849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2670405739129763127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensor
+  m_DetectableTags:
+  - BALL
+  - WALL
+  m_RaysPerDirection: 5
+  m_MaxRayDegrees: 42.4
+  m_SphereCastRadius: 1.55
+  m_RayLength: 22
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 3.39
+  m_EndVerticalOffset: 2.68
 --- !u!1 &2845869667728279477
 GameObject:
   m_ObjectHideFlags: 0

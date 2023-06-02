@@ -10,6 +10,9 @@ public class AgentShoot : MonoBehaviour
     [SerializeField]
     private float radius = 3f;
 
+    [SerializeField]
+    private float force = 30f;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -17,7 +20,7 @@ public class AgentShoot : MonoBehaviour
 
     public void Shoot()
     {
-        rigid.AddExplosionForce(3f, transform.position, radius);
+        rigid.AddExplosionForce(force, transform.position, radius);
     }
 
     void OnDrawGizmos()
