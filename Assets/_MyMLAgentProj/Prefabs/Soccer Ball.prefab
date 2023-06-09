@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 23737651838244920}
   - component: {fileID: 7929935387169439239}
   - component: {fileID: 4018542245873712300}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Soccer Ball
   m_TagString: BALL
   m_Icon: {fileID: 0}

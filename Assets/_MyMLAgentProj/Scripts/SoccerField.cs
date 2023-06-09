@@ -21,6 +21,13 @@ public class SoccerField : MonoBehaviour
     [SerializeField]
     private TextMeshPro blueScoreText;
 
+        [SerializeField]
+    private TextMeshPro redRewardText;
+
+    [SerializeField]
+    private TextMeshPro blueRewardText;
+
+
     [SerializeField]
     private AgentMovement player1;
     [SerializeField]
@@ -28,6 +35,9 @@ public class SoccerField : MonoBehaviour
 
     private SoccerAgent soccerAgent1;
     private SoccerAgent soccerAgent2;
+
+    [SerializeField]
+    private float maxX, maxZ;
 
     #region Property
     public Vector3 BallLocalPosition => ball.localPosition;
@@ -41,18 +51,35 @@ public class SoccerField : MonoBehaviour
         soccerAgent2 = player2.GetComponent<SoccerAgent>();
         ballRigid = ball.GetComponent<Rigidbody>();
     }
+
     void Update()
     {
+        TouchLine();
+
+        redRewardText.text = soccerAgent1.GetCumulativeReward().ToString();
+        blueRewardText.text = soccerAgent2.GetCumulativeReward().ToString();
+    }
+
+    void LateUpdate()
+    {
+        Vector3 ballPos = ballRigid.position;
+        ballPos.y = 0.2f;
+
+        ballRigid.transform.position = ballPos;
+    }
+
+    private void TouchLine()
+    {
         // 공이 나가면
-        if (Mathf.Abs(BallLocalPosition.x) > 13f || Mathf.Abs(BallLocalPosition.z) > 20f)
+        if (Mathf.Abs(BallLocalPosition.x) > maxX + 6f || Mathf.Abs(BallLocalPosition.z) > maxZ + 6f)
         {
             ResetPosition();
 
-            // 가장 최근에 터치했던 플레이어에게 감점 부여
-            if (LastTouchPlayer)
-            {
-                LastTouchPlayer.AddReward(-5f);
-            }
+            // // 가장 최근에 터치했던 플레이어에게 감점 부여
+            // if (LastTouchPlayer)
+            // {
+            //     LastTouchPlayer.AddReward(-5f);
+            // }
         }
     }
 
@@ -70,10 +97,14 @@ public class SoccerField : MonoBehaviour
         if (isRed)
         {
             UpdateUI(blueScoreText, ++blueScore);
+            soccerAgent1.AddRewardToAgent(5f);
+            soccerAgent2.AddRewardToAgent(-5f);
         }
         else
         {
             UpdateUI(redScoreText, ++redScore);
+            soccerAgent2.AddRewardToAgent(5f);
+            soccerAgent1.AddRewardToAgent(-5f);
         }
 
         if (redScore == 3 || blueScore == 3)
@@ -106,6 +137,7 @@ public class SoccerField : MonoBehaviour
 
     private void ResetPosition()
     {
+        Debug.Log("RESET POSITION");
         ball.localPosition = Vector3.zero;
         ballRigid.velocity = Vector3.zero;
         ballRigid.angularVelocity = Vector3.zero;

@@ -19,7 +19,7 @@ public class AgentMovement : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
-        rigid.MovePosition(transform.position + direction.normalized * Time.deltaTime * speed);
+        rigid.MovePosition(transform.position + transform.TransformDirection(direction.normalized) * Time.deltaTime * speed);
     }
 
     public void ResetMovement()
