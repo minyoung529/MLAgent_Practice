@@ -21,7 +21,7 @@ public class SoccerField : MonoBehaviour
     [SerializeField]
     private TextMeshPro blueScoreText;
 
-        [SerializeField]
+    [SerializeField]
     private TextMeshPro redRewardText;
 
     [SerializeField]
@@ -62,7 +62,7 @@ public class SoccerField : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 ballPos = ballRigid.position;
+        Vector3 ballPos = ballRigid.transform.position;
         ballPos.y = 0.2f;
 
         ballRigid.transform.position = ballPos;
@@ -97,14 +97,32 @@ public class SoccerField : MonoBehaviour
         if (isRed)
         {
             UpdateUI(blueScoreText, ++blueScore);
-            soccerAgent1.AddRewardToAgent(5f);
-            soccerAgent2.AddRewardToAgent(-5f);
+
+            if (LastTouchPlayer == soccerAgent2)
+            {
+                soccerAgent2.AddRewardToAgent(5f);
+                soccerAgent1.AddRewardToAgent(-5f);
+            }
+            else
+            {
+                soccerAgent1.AddRewardToAgent(-8.5f);
+                Debug.Log("빨강 자책골");
+            }
         }
         else
         {
             UpdateUI(redScoreText, ++redScore);
-            soccerAgent2.AddRewardToAgent(5f);
-            soccerAgent1.AddRewardToAgent(-5f);
+
+            if (LastTouchPlayer == soccerAgent1)
+            {
+                soccerAgent1.AddRewardToAgent(5f);
+                soccerAgent2.AddRewardToAgent(-5f);
+            }
+            else
+            {
+                soccerAgent2.AddRewardToAgent(-7.5f);
+                Debug.Log("빠랑 자책골");
+            }
         }
 
         if (redScore == 3 || blueScore == 3)
