@@ -6,8 +6,7 @@ using TMPro;
 public class SoccerField : MonoBehaviour
 {
     [SerializeField]
-    private Transform ball;
-    private Rigidbody ballRigid;
+    private Ball[] balls;
 
     [SerializeField]
     private bool isTraining = false;
@@ -39,9 +38,8 @@ public class SoccerField : MonoBehaviour
     [SerializeField]
     private float maxX, maxZ;
 
-    #region Property
-    public Vector3 BallLocalPosition => ball.localPosition;
-    #endregion  
+    public ReulstCanvas resultCanvas;
+
 
     public static SoccerAgent LastTouchPlayer;
 
@@ -49,7 +47,6 @@ public class SoccerField : MonoBehaviour
     {
         soccerAgent1 = player1.GetComponent<SoccerAgent>();
         soccerAgent2 = player2.GetComponent<SoccerAgent>();
-        ballRigid = ball.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -62,30 +59,30 @@ public class SoccerField : MonoBehaviour
 
     void LateUpdate()
     {
-        Vector3 ballPos = ballRigid.transform.position;
-        ballPos.y = 0.2f;
-
-        ballRigid.transform.position = ballPos;
+        foreach (Ball ball in balls)
+        {
+            Vector3 pos = ball.transform.localPosition;
+            pos.y = 0.2f;
+            ball.transform.localPosition = pos;
+        }
     }
 
     private void TouchLine()
     {
         // 공이 나가면
-        if (Mathf.Abs(BallLocalPosition.x) > maxX + 6f || Mathf.Abs(BallLocalPosition.z) > maxZ + 6f)
-        {
-            ResetPosition();
 
-            // // 가장 최근에 터치했던 플레이어에게 감점 부여
-            // if (LastTouchPlayer)
-            // {
-            //     LastTouchPlayer.AddReward(-5f);
-            // }
+        foreach (Ball ball in balls)
+        {
+            if (Mathf.Abs(ball.transform.localPosition.x) > maxX + 6f || Mathf.Abs(ball.transform.localPosition.z) > maxZ + 6f)
+            {
+                ResetPosition();
+            }
         }
     }
 
     public void ResetField()
     {
-        // ball Random Transform
+        // Reset Ball Position
         ResetPosition();
 
         UpdateUI(redScoreText, redScore = 0);
@@ -102,6 +99,7 @@ public class SoccerField : MonoBehaviour
             {
                 soccerAgent2.AddRewardToAgent(5f);
                 soccerAgent1.AddRewardToAgent(-5f);
+                Debug.Log("파랑 골");
             }
             else
             {
@@ -117,11 +115,12 @@ public class SoccerField : MonoBehaviour
             {
                 soccerAgent1.AddRewardToAgent(5f);
                 soccerAgent2.AddRewardToAgent(-5f);
+                Debug.Log("빨강 골");
             }
             else
             {
                 soccerAgent2.AddRewardToAgent(-7.5f);
-                Debug.Log("빠랑 자책골");
+                Debug.Log("파랑 자책골");
             }
         }
 
@@ -131,19 +130,18 @@ public class SoccerField : MonoBehaviour
             {
                 soccerAgent1.AddRewardToAgent(10f);
                 soccerAgent2.AddRewardToAgent(-2f);
+                resultCanvas.Defeat();
             }
             else
             {
                 soccerAgent2.AddRewardToAgent(10f);
                 soccerAgent1.AddRewardToAgent(-2f);
+                resultCanvas.Victory();
             }
 
             soccerAgent1.EndEpisode();
             soccerAgent2.EndEpisode();
             ResetField();
-        }
-        else
-        {
             ResetPosition();
         }
     }
@@ -155,12 +153,9 @@ public class SoccerField : MonoBehaviour
 
     private void ResetPosition()
     {
-        Debug.Log("RESET POSITION");
-        ball.localPosition = Vector3.zero;
-        ballRigid.velocity = Vector3.zero;
-        ballRigid.angularVelocity = Vector3.zero;
-
-        player1.ResetMovement();
-        player2.ResetMovement();
+        foreach (Ball ball in balls)
+        {
+            ball.ResetPosition();
+        }
     }
 }

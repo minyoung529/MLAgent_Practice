@@ -8,12 +8,6 @@ public class GoalPost : MonoBehaviour
     private bool isRed;
 
     [SerializeField]
-    private SoccerAgent myAgent;
-
-    [SerializeField]
-    private SoccerAgent oppositeAgent;
-
-    [SerializeField]
     private Color color;
 
     private SoccerField soccerField;
@@ -27,10 +21,9 @@ public class GoalPost : MonoBehaviour
     {
         if(other.gameObject.CompareTag("BALL"))
         {
-            myAgent?.AddRewardToAgent(-5f);
-            oppositeAgent?.AddRewardToAgent(5f);
-            
             soccerField.AddScore(isRed);
+
+            other.gameObject.GetComponent<Ball>().ResetPosition();
         }
     }
 

@@ -23,8 +23,8 @@ public class SoccerAgent : Agent
             AddRewardToAgent(-0.25f);
         }
 
-        curpos.x = Mathf.Clamp(curpos.x, -20f, 20f);
-        curpos.z = Mathf.Clamp(curpos.z, -33f, 33f);
+        curpos.x = Mathf.Clamp(curpos.x, -19f, 19f);
+        curpos.z = Mathf.Clamp(curpos.z, -32f, 32f);
 
         transform.localPosition = curpos;
 
@@ -46,14 +46,9 @@ public class SoccerAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(soccerField.BallLocalPosition);
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation((soccerField.BallLocalPosition - transform.localPosition).normalized);
-
-        sensor.AddObservation(oppositeGoalPost.localPosition); // Opposite goal post position
-        sensor.AddObservation((oppositeGoalPost.localPosition - soccerField.BallLocalPosition).normalized); // Opposite goal post position
-
-        // sensor.AddObservation(Vector3.Distance(oppositeGoalPost.localPosition, soccerField.BallLocalPosition)); //
+        sensor.AddObservation(transform.position);
+        sensor.AddObservation(oppositeGoalPost.position); // Opposite goal post position
+        sensor.AddObservation(oppositeGoalPost.position - transform.position); // Opposite goal post position
 
         // vec3 x 5 + float x 1
     }
@@ -62,31 +57,18 @@ public class SoccerAgent : Agent
     {
         float horizontal = actions.ContinuousActions[0];
         float vertical = actions.ContinuousActions[1];
-        float rotation = actions.ContinuousActions[2];
 
         movement.Move(new Vector3(horizontal, 0f, vertical));
-
-        transform.Rotate(Vector3.up * rotation * Time.deltaTime * 180f);
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
 
         var cActions = actionsOut.ContinuousActions;
         cActions[0] = horizontal;
         cActions[1] = vertical;
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            cActions[2] = -1f;
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            cActions[2] = 1f;
-        }
     }
 
     public void AddRewardToAgent(float value)
@@ -99,7 +81,7 @@ public class SoccerAgent : Agent
         if (other.gameObject.CompareTag("BALL"))
         {
             SoccerField.LastTouchPlayer = this;
-            AddRewardToAgent(0.25f);
+            AddRewardToAgent(0.75f);
         }
     }
 }

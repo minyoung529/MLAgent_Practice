@@ -303,9 +303,9 @@ GameObject:
   - component: {fileID: 4486549071709112244}
   - component: {fileID: 5866666020708254631}
   - component: {fileID: 5866666020708254630}
-  - component: {fileID: 1271280405582631617}
   - component: {fileID: 4033516218284198805}
   - component: {fileID: 4662207844958838849}
+  - component: {fileID: 1308576998213761519}
   m_Layer: 0
   m_Name: Donguri01
   m_TagString: Untagged
@@ -366,16 +366,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 15
+    VectorObservationSize: 9
     NumStackedVectorObservations: 1
     m_ActionSpec:
-      m_NumContinuousActions: 3
+      m_NumContinuousActions: 2
       BranchSizes: 
-    VectorActionSize: 03000000
+    VectorActionSize: 02000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 8c9ec1a318178c24cab77d9ce0e078ec, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Soccer
@@ -442,19 +442,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 4
   force: 3000
---- !u!65 &1271280405582631617
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2670405739129763127}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.31, y: 5.005034, z: 2.2}
-  m_Center: {x: 0, y: 2.4620855, z: 0}
 --- !u!54 &4033516218284198805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -486,19 +473,32 @@ MonoBehaviour:
   m_SensorName: RayPerceptionSensor
   m_DetectableTags:
   - BALL
-  - WALL
-  m_RaysPerDirection: 1
-  m_MaxRayDegrees: 58.9
+  m_RaysPerDirection: 3
+  m_MaxRayDegrees: 180
   m_SphereCastRadius: 1.55
   m_RayLength: 138
   m_RayLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967291
+    m_Bits: 4294967112
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 3.39
   m_EndVerticalOffset: 2.68
+--- !u!136 &1308576998213761519
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2670405739129763127}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 2.38
+  m_Height: 7.68
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.55, z: 0}
 --- !u!1 &2845869667728279477
 GameObject:
   m_ObjectHideFlags: 0
@@ -978,7 +978,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 0327856d1a25df642b73b587c0f12848, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
